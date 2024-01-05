@@ -1,0 +1,31 @@
+# Set the CSV file name (CSV file - used to display the names of the original and renamed image files using google sheets) 
+
+csv_file="file_log.csv"
+
+# Loop through all JPG files in the current directory
+for file in *.JPG; do
+    # Initialize newname variable
+    newname=""
+    
+    # Check if the file matches the first pattern
+    if [[ $file =~ (IMG_|DSC_|MMA|WJ2_)([0-9]+)\.JPG ]]; then
+        # Generate a new name based on the first pattern
+        newname=$(echo "$file" | perl -pe 's/(IMG_|DSC_|MMA|WJ2_)([0-9]+)\.JPG/PWP2024_000$2E_EMILY.JPG/')
+    # Check if the file matches the second pattern
+    elif [[ $file =~ (SM__)([0-9]+)\.JPG ]]; then
+        # Generate a new name based on the second pattern
+        newname=$(echo "$file" | perl -pe 's/(SM__)([0-9]+)\.JPG/PWP2024_000$2EM_EMILY.JPG/')
+    fi
+    
+    # If a new name is generated
+    if [ -n "$newname" ]; then
+        # Move the file with the new name
+        mv "$file" "$newname"
+        
+        # Append the file and newname to the CSV file
+        echo "$file,$newname" >> "$csv_file"
+    else
+        # If no matching pattern is found, print a message
+        echo "No matching pattern for file: $file"
+    fi
+done
