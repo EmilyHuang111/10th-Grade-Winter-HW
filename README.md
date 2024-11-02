@@ -19,3 +19,9 @@ This script renames image files in the current directory based on specific patte
 2. Run the script in the terminal:
    ```bash
    bash rename_images.sh
+
+## Requirements
+
+- **Bash**: This script is written for a Unix-like shell that supports Bash.
+- **Perl**: The script uses Perl for pattern matching and renaming operations.
+
